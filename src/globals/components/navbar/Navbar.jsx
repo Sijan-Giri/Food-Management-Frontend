@@ -35,12 +35,12 @@ const Navbar = () => {
                                 </a>
                             </li>
                             <li className="relative">
-        <a className="block md:px-4 transition hover:text-yellow-700">
+        <Link to="/cart"><a className="block md:px-4 transition hover:text-yellow-700">
             <span>Cart</span>
             <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full transform translate-x-2 -translate-y-2">
                 {items.length}
                 </span>
-            </a>
+            </a></Link>
         </li>
            </ul>
                </div>
