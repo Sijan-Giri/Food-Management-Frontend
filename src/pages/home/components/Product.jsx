@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import Card from './Card'
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchProducts } from '../../../store/productSlice';
+
 
 const Product = () => {
-    const [products,setProducts] = useState([]);
 
-    const fetchProducts = async() => {
-        const response = await axios.get("http://localhost:2000/createProduct");
-        if(response.status === 200) {
-            setProducts(response.data.data)
-        }
-    }
+    const dispatch = useDispatch();
+    const {data : products , state} = useSelector((state) => state.product)
 
     useEffect(() => {
-        fetchProducts();
+        dispatch(fetchProducts())
     },[])
 
   return (
