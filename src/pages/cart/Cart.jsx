@@ -1,9 +1,17 @@
 import React from 'react'
 import Navbar from '../../globals/components/navbar/Navbar'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { removeCart } from '../../store/cartSlice'
 
 const Cart = () => {
     const products = useSelector((state) => state.cart)
+
+    const dispatch = useDispatch();
+
+    const handleRemove = (productId) => {
+      dispatch(removeCart(productId))
+    }
+
   return (
     <>
     <Navbar />
@@ -30,14 +38,14 @@ const Cart = () => {
               </div>
               <div class="flex items-center space-x-4">
                 <p class="text-sm">259.000 ₭</p>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 cursor-pointer duration-150 hover:text-red-500">
+                <svg onClick={() => handleRemove(product._id)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 cursor-pointer duration-150 hover:text-red-500">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </div>
             </div>
           </div>
         </div>
-                    </>
+    </>
                 )
             })
         }
