@@ -7,7 +7,8 @@ const authSlice = createSlice({
     name : 'auth',
     initialState : {
         data : [],
-        status : STATUSES.LOADING
+        status : STATUSES.LOADING,
+        token : ""
     },
     reducers : {
         setData(state,action) {
@@ -15,11 +16,14 @@ const authSlice = createSlice({
         },
         setStatus(state,action) {
             state.status = action.payload
+        },
+        setToken(state,action) {
+            state.token = action.payload
         }
     }
 })
 
-export const {setData , setStatus} = authSlice.actions;
+export const {setData , setStatus , setToken} = authSlice.actions;
 export default authSlice.reducer;
 
 export function register(data) {
@@ -46,6 +50,7 @@ export function login(data) {
             dispatch(setStatus(STATUSES.LOADING))
             const response = await axios.post("http://localhost:2000/login",data)
         if(response.status === 200) {
+            dispatch(setToken(response.data.token))
             dispatch(setStatus(STATUSES.SUCCESS))
             dispatch(setData(response.data.data))
         }
