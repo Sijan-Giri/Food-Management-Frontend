@@ -1,34 +1,41 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { STATUSES } from "../globals/misc/status";
 
 
 const authSlice = createSlice({
     name : 'auth',
     initialState : {
-        data : []
+        data : [],
+        status : STATUSES.LOADING
     },
     reducers : {
         setData(state,action) {
             state.data = action.payload
+        },
+        setStatus(state,action) {
+            state.status = action.payload
         }
     }
 })
 
-export const {setData} = authSlice.actions;
+export const {setData , setStatus} = authSlice.actions;
 export default authSlice.reducer;
 
 export function register(data) {
     return async function registerThunk(dispatch) {
         try {
+            dispatch(setStatus(STATUSES.LOADING))
             const response = await axios.post("http://localhost:2000/register",data);
             if(response.status === 200){
+                dispatch(setStatus(STATUSES.SUCCESS))
                 dispatch(setData(response.data.data))
             }
             else {
-                dispatch(error)
+                dispatch(setStatus(STATUSES.ERROR))
             }
         } catch (error) {
-            dispatch(error)
+            dispatch(setStatus(STATUSES.ERROR))
         }
     }
 }
@@ -36,15 +43,17 @@ export function register(data) {
 export function login(data) {
     return async function loginThunk(dispatch) {
         try {
+            dispatch(setStatus(STATUSES.LOADING))
             const response = await axios.post("http://localhost:2000/login",data)
         if(response.status === 200) {
+            dispatch(setStatus(STATUSES.SUCCESS))
             dispatch(setData(response.data.data))
         }
         else {
-            dispatch(error)
+            dispatch(setStatus(STATUSES.ERROR))
         }
         } catch (error) {
-            dispatch(error)
+            dispatch(setStatus(STATUSES.ERROR))
         }
     }
 }
