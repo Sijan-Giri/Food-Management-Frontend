@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { STATUSES } from "../globals/misc/status";
+import API from "../globals/http";
 
 const productSlice = createSlice({
     name : 'product',
@@ -22,9 +22,9 @@ export const {setData , setStatus} = productSlice.actions;
 export default productSlice.reducer;
 
 export function fetchProducts() {
-    return async function fetchProductsThunk(dispatch , getState){
+    return async function fetchProductsThunk(dispatch){
         try {
-            const response = await axios.get("http://localhost:2000/createProduct");
+            const response = await API.get("/createProduct");
         if(response.status === 200) {
             dispatch(setStatus(STATUSES.SUCCESS))
             dispatch(setData(response.data.data))

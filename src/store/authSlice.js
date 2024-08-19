@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 import { STATUSES } from "../globals/misc/status";
+import API from "../globals/http";
 
 
 const authSlice = createSlice({
@@ -30,7 +30,7 @@ export function register(data) {
     return async function registerThunk(dispatch) {
         try {
             dispatch(setStatus(STATUSES.LOADING))
-            const response = await axios.post("http://localhost:2000/register",data);
+            const response = await API.post("/register",data);
             if(response.status === 200){
                 dispatch(setStatus(STATUSES.SUCCESS))
                 dispatch(setData(response.data.data))
@@ -48,7 +48,7 @@ export function login(data) {
     return async function loginThunk(dispatch) {
         try {
             dispatch(setStatus(STATUSES.LOADING))
-            const response = await axios.post("http://localhost:2000/login",data)
+            const response = await API.post("/login",data)
         if(response.status === 200) {
             dispatch(setToken(response.data.token))
             dispatch(setStatus(STATUSES.SUCCESS))
