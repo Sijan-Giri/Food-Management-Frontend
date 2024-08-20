@@ -19,11 +19,16 @@ const authSlice = createSlice({
         },
         setToken(state,action) {
             state.token = action.payload
+        },
+        logOut(state,action) {
+            state.data = [],
+            state.token = null,
+            state.status = STATUSES.SUCCESS
         }
     }
 })
 
-export const {setData , setStatus , setToken} = authSlice.actions;
+export const {setData , setStatus , setToken , logOut} = authSlice.actions;
 export default authSlice.reducer;
 
 export function register(data) {
@@ -53,6 +58,7 @@ export function login(data) {
             dispatch(setToken(response.data.token))
             dispatch(setStatus(STATUSES.SUCCESS))
             dispatch(setData(response.data.data))
+            localStorage.setItem("token",response.data.token)
         }
         else {
             dispatch(setStatus(STATUSES.ERROR))

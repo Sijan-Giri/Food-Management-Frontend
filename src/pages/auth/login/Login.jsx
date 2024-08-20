@@ -11,14 +11,14 @@ const Login = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {status , token} = useSelector((state) => state.auth)
+  const {status} = useSelector((state) => state.auth)
 
   const handleLogin = (data) => {
     dispatch(login(data))
-    if(status === STATUSES.SUCCESS) {
-      localStorage.setItem("token",token)
-      return navigate("/");
-    }
+  }
+
+  if(status === STATUSES.SUCCESS) {
+     navigate("/");
   }
 
   return (

@@ -1,14 +1,9 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addCart } from '../../../store/cartSlice'
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Card = ({product}) => {
-
-  const dispatch = useDispatch();
-  const handleCart = (product) => {
-    dispatch(addCart(product))
-  }
 
   return (
     <>
@@ -23,9 +18,6 @@ const Card = ({product}) => {
       <p class="text-base font-medium text-gray-500 line-through dark:text-gray-300">$25.00</p>
       <p class="ml-auto text-base font-medium text-green-500">20% off</p>
     </div>
-    <Link to="/"><button onClick={() => handleCart(product)} class="block mt-4 w-full px-4 py-2 text-center text-white bg-blue-600 rounded-lg shadow-md transition-colors duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-      Add to Cart
-    </button></Link>
   </div>
 </div>
     </Link>

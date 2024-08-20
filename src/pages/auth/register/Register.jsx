@@ -15,10 +15,12 @@ const Register = () => {
 
   const handleSubmit = (data) => {
     dispatch(register(data));
-    if(status === STATUSES.SUCCESS) {
-      return navigate("/login")
-    }
   }
+
+  if(status === STATUSES.SUCCESS) {
+    return navigate("/login")
+  }
+
   return (
     <>
     <div className="space-y-2">
