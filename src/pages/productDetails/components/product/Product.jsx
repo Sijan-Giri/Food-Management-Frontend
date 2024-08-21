@@ -1,17 +1,27 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { fetchSingleProduct } from '../../../../store/productSlice';
 import Navbar from '../../../../globals/components/navbar/Navbar';
+import { addToCart } from '../../../../store/cartSlice';
 
 const Product = () => {
     const {id} = useParams();
     const dispatch = useDispatch();
     const {singleProduct} = useSelector((state) => state.product)
+    const {data:user} = useSelector((state) => state.auth);
+    const navigate = useNavigate();
 
     useEffect(() => {
       dispatch(fetchSingleProduct(id))
     },[])
+
+    const handleCart = () => {
+      if(user.length == 0 && !localStorage.getItem("token")) {
+        return navigate("/login")
+      }
+      dispatch(addToCart(id))
+    }
 
   return (
     <>
@@ -169,7 +179,7 @@ const Product = () => {
     />
   </svg>
 
-  <span class="text-lg font-semibold">Add to Cart</span>
+  <span onClick={handleCart} class="text-lg font-semibold">Add to Cart</span>
 </a>
 
           </div>

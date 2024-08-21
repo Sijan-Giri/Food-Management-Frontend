@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { STATUSES } from "../globals/misc/status";
-import API from "../globals/http";
+import {API} from "../globals/http";
 
 
 const authSlice = createSlice({

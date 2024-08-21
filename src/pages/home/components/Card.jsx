@@ -1,6 +1,4 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { addCart } from '../../../store/cartSlice'
 import { Link } from 'react-router-dom';
 
 const Card = ({product}) => {
