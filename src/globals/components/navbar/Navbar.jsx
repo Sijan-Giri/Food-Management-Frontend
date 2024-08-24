@@ -1,11 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { logOut } from '../../../store/authSlice';
+import { fetchCartItems } from '../../../store/cartSlice';
 
 const Navbar = () => {
     const {items} = useSelector((state) => state.cart);
-    console.log(items)
     const {data:user} = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -15,6 +15,10 @@ const Navbar = () => {
     localStorage.removeItem("token");
     navigate("/login")
   }
+
+  useEffect(() => {
+    dispatch(fetchCartItems())
+  },[])
 
   return (
     <> 
