@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from '../../globals/components/navbar/Navbar'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteCartItem, updateCartItem } from '../../store/cartSlice'
+import { Link } from 'react-router-dom'
 
 const Cart = () => {
     const {items:products} = useSelector((state) => state.cart)
@@ -70,7 +71,7 @@ const Cart = () => {
             <p class="text-sm text-gray-700">including VAT</p>
           </div>
         </div>
-        <button class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button>
+        <Link to="/checkout"><button class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">Check out</button></Link>
       </div>
     </div>
   </div>
