@@ -20,10 +20,11 @@ const Checkout = () => {
       [name] : value
     })
   }
+ 
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    // yesma aako data submit grdinii
+    console.log(data)
   }
 
   return (
@@ -80,11 +81,11 @@ const Checkout = () => {
       </div>
     </form>
   </div>
+  <form onSubmit={handleSubmit} >
   <div class="mt-10 bg-gray-50 px-4 pt-8 lg:mt-0">
     <p class="text-xl font-medium">Payment Details</p>
     <p class="text-gray-400">Complete your order by providing your payment details.</p>
     <div class="">
-      <form onSubmit={handleSubmit}>
       <label for="email" class="mt-4 mb-2 block text-sm font-medium">Email</label>
       <div class="relative">
         <input type="text" id="email" name="email" class="w-full rounded-md border border-gray-200 px-4 py-3 pl-11 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500" placeholder="your.email@gmail.com" onChange={handleChange}/>
@@ -121,7 +122,6 @@ const Checkout = () => {
         </select>
         <input type="text" name="billing-zip" class="mt-3 flex-shrink-0 rounded-md border border-gray-200 px-4 py-3 text-sm shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500 sm:ml-3 sm:mt-0 sm:w-1/6" placeholder="ZIP" />
       </div>
-      </form>
 
       <div class="mt-6 border-t border-b py-2">
         <div class="flex items-center justify-between">
@@ -140,6 +140,7 @@ const Checkout = () => {
     </div>
     <button class="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Place Order</button>
   </div>
+  </form>
 </div>
 
     <Footer />
