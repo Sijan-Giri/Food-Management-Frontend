@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import Navbar from '../../globals/components/navbar/Navbar'
 import Footer from '../../globals/components/footer/Footer'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { createOrder } from '../../store/checkoutSlice'
 
 const Checkout = () => {
 
   const {items:products} = useSelector((state) => state.cart);
+  const [paymentMethod,setPaymentMethod] = useState("COD");
+  const subTotal = products.reduce((amount,item) => item.quantity * item.product.productPrice + amount,0);
+  const dispatch = useDispatch();
+  const shippingAmount = 100
+  const totalAmount = subTotal + shippingAmount
 
   const [data,setData] = useState({
     email : "",
@@ -15,16 +21,32 @@ const Checkout = () => {
 
   const handleChange = (e) => {
     const {name , value} = e.target;
-    setData({
+    setData({ 
       ...data,
       [name] : value
     })
   }
+
+  const handlePaymentMethod = (e) => {
+    setPaymentMethod(e.target.value);
+  }
  
+  const handleOrder = () => {
+    const orderDetails = {
+      shippingAddress : data.shippingAddress,
+      totalAmount : totalAmount,
+      item : products,
+      paymentDetails : {
+        method : paymentMethod
+      },
+      phoneNumber : data.phoneNumber
+    }
+    dispatch(createOrder(orderDetails))
+  }
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data)
+    handleOrder();
   }
 
   return (
@@ -58,7 +80,7 @@ const Checkout = () => {
     <p class="mt-8 text-lg font-medium">Shipping Methods</p>
     <form class="mt-5 grid gap-6">
       <div class="relative">
-        <input class="peer hidden" id="radio_1" type="radio" name="radio" checked />
+        <input class="peer hidden" id="radio_1" value="COD" checked={paymentMethod==="COD"} type="radio" name="radio" onChange={handlePaymentMethod}  />
         <span class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
         <label class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" for="radio_1">
           <img class="w-14 object-contain" src="/images/naorrAeygcJzX0SyNI4Y0.png" alt="" />
@@ -69,7 +91,7 @@ const Checkout = () => {
         </label>
       </div>
       <div class="relative">
-        <input class="peer hidden" id="radio_2" type="radio" name="radio" checked />
+        <input class="peer hidden" id="radio_2" type="radio" name="radio" value="Khalti" onChange={handlePaymentMethod} />
         <span class="peer-checked:border-gray-700 absolute right-4 top-1/2 box-content block h-3 w-3 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
         <label class="peer-checked:border-2 peer-checked:border-gray-700 peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4" for="radio_2">
           <img class="w-14 object-contain" src="/images/oG8xsl3xsOkwkMsrLGKM4.png" alt="" />
@@ -126,16 +148,16 @@ const Checkout = () => {
       <div class="mt-6 border-t border-b py-2">
         <div class="flex items-center justify-between">
           <p class="text-sm font-medium text-gray-900">Subtotal</p>
-          <p class="font-semibold text-gray-900">$399.00</p>
+          <p class="font-semibold text-gray-900">Rs {subTotal}</p>
         </div>
         <div class="flex items-center justify-between">
           <p class="text-sm font-medium text-gray-900">Shipping</p>
-          <p class="font-semibold text-gray-900">$8.00</p>
+          <p class="font-semibold text-gray-900">Rs {shippingAmount}</p>
         </div>
       </div>
       <div class="mt-6 flex items-center justify-between">
         <p class="text-sm font-medium text-gray-900">Total</p>
-        <p class="text-2xl font-semibold text-gray-900">$408.00</p>
+        <p class="text-2xl font-semibold text-gray-900">Rs {totalAmount}</p>
       </div>
     </div>
     <button class="mt-4 mb-8 w-full rounded-md bg-gray-900 px-6 py-3 font-medium text-white">Place Order</button>
