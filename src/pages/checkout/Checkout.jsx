@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../../globals/components/navbar/Navbar'
 import Footer from '../../globals/components/footer/Footer'
 import { useDispatch, useSelector } from 'react-redux'
 import { createOrder } from '../../store/checkoutSlice'
+import { STATUSES } from '../../globals/misc/status'
+import { useNavigate } from 'react-router-dom'
 
 const Checkout = () => {
-
+  const navigate = useNavigate()
+  const {status} = useSelector((state) => state.checkout)
   const {items:products} = useSelector((state) => state.cart);
   const [paymentMethod,setPaymentMethod] = useState("COD");
   const subTotal = products.reduce((amount,item) => item.quantity * item.product.productPrice + amount,0);
@@ -43,7 +46,19 @@ const Checkout = () => {
     }
     dispatch(createOrder(orderDetails))
   }
+
+  const proceedForKhaltiPayment = () => {
+    console.log(paymentMethod,status)
+    if(paymentMethod === "Khalti" && status === STATUSES.SUCCESS) {
+      return navigate("/Khalti")
+    }
+  }
   
+  useEffect(() => {
+    proceedForKhaltiPayment()
+  },[status,data])
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
     handleOrder();

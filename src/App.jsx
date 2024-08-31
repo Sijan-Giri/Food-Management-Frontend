@@ -9,6 +9,7 @@ import store from './store/store'
 import Cart from './pages/cart/Cart'
 import ProductDetails from './pages/productDetails/ProductDetails'
 import Checkout from './pages/checkout/Checkout'
+import Khalti from './pages/checkout/Khalti'
 
 function App() {
   
@@ -23,6 +24,7 @@ function App() {
         <Route path='/cart' element={<Cart />}/>
         <Route path='/productDetails/:id' element={<ProductDetails />} />
         <Route path='/checkout' element={<Checkout/>} />
+        <Route path='/khalti' element={<Khalti />} />
       </Routes>
       </BrowserRouter>
       </Provider>
