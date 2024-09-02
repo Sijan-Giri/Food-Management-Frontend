@@ -6,7 +6,8 @@ const checkoutSlice = createSlice({
     name : "checkout",
     initialState : {
         data : [],
-        status : null
+        status : null,
+        orderId : []
     },
     reducers : {
         setData(state,action) {
@@ -14,11 +15,14 @@ const checkoutSlice = createSlice({
         },
         setStatus(state,action) {
             state.status = action.payload;
+        },
+        setOrderId(state,action) {
+            state.orderId = action.payload
         }
     }
 })
 
-export const {setData , setStatus} = checkoutSlice.actions;
+export const {setData , setStatus, setOrderId} = checkoutSlice.actions;
 export default checkoutSlice.reducer;
 
 export function createOrder(data) {
@@ -29,6 +33,7 @@ export function createOrder(data) {
             if(response.status === 200) {
                 dispatch(setData(response.data.data))
                 dispatch(setStatus(STATUSES.SUCCESS))
+                dispatch(setOrderId(response.data.orderId))
             }
             else {
                 dispatch(setStatus(STATUSES.ERROR))

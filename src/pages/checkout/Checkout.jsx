@@ -7,8 +7,9 @@ import { STATUSES } from '../../globals/misc/status'
 import { useNavigate } from 'react-router-dom'
 
 const Checkout = () => {
-  const navigate = useNavigate()
-  const {status} = useSelector((state) => state.checkout)
+  const navigate = useNavigate();
+  const [currentOrder , setCurrentOrder] = useState(null)
+  const {status,orderId} = useSelector((state) => state.checkout)
   const {items:products} = useSelector((state) => state.cart);
   const [paymentMethod,setPaymentMethod] = useState("COD");
   const subTotal = products.reduce((amount,item) => item.quantity * item.product.productPrice + amount,0);
@@ -45,12 +46,14 @@ const Checkout = () => {
       phoneNumber : data.phoneNumber
     }
     dispatch(createOrder(orderDetails))
+    setCurrentOrder(orderDetails)
   }
 
   const proceedForKhaltiPayment = () => {
-    console.log(paymentMethod,status)
+    
     if(paymentMethod === "Khalti" && status === STATUSES.SUCCESS) {
-      return navigate("/Khalti")
+      const {totalAmount} = currentOrder
+      return navigate(`/khalti?orderId=${orderId}&totalamount=${totalAmount}`)
     }
   }
   
@@ -58,12 +61,12 @@ const Checkout = () => {
     proceedForKhaltiPayment()
   },[status,data])
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     handleOrder();
   }
 
+  
   return (
     <>
     <Navbar />
