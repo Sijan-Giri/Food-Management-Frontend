@@ -57,7 +57,11 @@ const Checkout = () => {
       handleKhalti(totalAmount,orderId);
       return navigate(`/khalti?orderId=${orderId}&totalamount=${totalAmount}`);
     }
+    else if(paymentMethod === "COD" && status === STATUSES.SUCCESS) {
+      window.location.href = "/"
+    }
   }
+ 
   
   useEffect(() => {
     proceedForKhaltiPayment()

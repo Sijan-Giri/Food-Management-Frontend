@@ -25,6 +25,7 @@ function App() {
         <Route path='/productDetails/:id' element={<ProductDetails />} />
         <Route path='/checkout' element={<Checkout/>} />
         <Route path='/success' element={<KhaltiSuccess />} />
+        {/* <Route path='/profile' element={<Profile />} /> */}
       </Routes>
       </BrowserRouter>
       </Provider>

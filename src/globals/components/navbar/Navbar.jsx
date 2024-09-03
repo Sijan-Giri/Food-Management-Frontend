@@ -45,17 +45,19 @@ const Navbar = () => {
             <div className="hidden w-full lg:flex flex-wrap justify-end items-center space-y-6 p-6 rounded-xl bg-white bg-opacity-60 md:space-y-0 md:p-0 md:flex-nowrap lg:w-7/12">
                 <div className="text-gray-600 lg:pr-4">
                     <ul className="flex space-x-6 font-medium text-sm tracking-wide">
-                        <li>
-                            <a href="#" className="block md:px-4 transition hover:text-yellow-700">
-                                I've a restaurant
+                        <Link to='/profile'><li>
+                            <a className="block md:px-4 transition hover:text-yellow-700">
+                                Profile
                             </a>
-                        </li>
+                        </li></Link>
                         <li>
                             <a href="#" className="block md:px-4 transition hover:text-yellow-700">
                                 Wishlist
                             </a>
                         </li>
-                        <li className="relative">
+                        {
+                            items.length !== 0 && (
+                                <li className="relative">
                             <Link to="/cart">
                                 <a className="block md:px-4 transition hover:text-yellow-700">
                                     Cart
@@ -65,6 +67,8 @@ const Navbar = () => {
                                 </a>
                             </Link>
                         </li>
+                            )
+                        }
                     </ul>
                 </div>
                 <div className="flex items-center space-x-4 border-yellow-200 lg:pl-4">
