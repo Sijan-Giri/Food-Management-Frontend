@@ -51,7 +51,7 @@ const Navbar = () => {
                             </a>
                         </li></Link>
                         <li>
-                            <a href="#" className="block md:px-4 transition hover:text-yellow-700">
+                            <a className="block md:px-4 transition hover:text-yellow-700">
                                 Wishlist
                             </a>
                         </li>

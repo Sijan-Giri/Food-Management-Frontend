@@ -16,7 +16,7 @@ const cartSlice = createSlice({
             state.status = action.payload
         },
         updateItems(state,action) {
-            const index = state.items.findIndex((item) => item.product._id === action.payload.productId)
+            zitems.findIndex((item) => item.product._id === action.payload.productId)
             if(index !== -1) {
                 state.items[index].quantity = action.payload.quantity
             }

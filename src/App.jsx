@@ -10,6 +10,8 @@ import Cart from './pages/cart/Cart'
 import ProductDetails from './pages/productDetails/ProductDetails'
 import Checkout from './pages/checkout/Checkout'
 import KhaltiSuccess from './pages/checkout/KhaltiSuccess'
+import UserProfile from './pages/profile/UserProfile'
+import MyOrders from './pages/myOrders/MyOrders'
 
 function App() {
   
@@ -25,7 +27,8 @@ function App() {
         <Route path='/productDetails/:id' element={<ProductDetails />} />
         <Route path='/checkout' element={<Checkout/>} />
         <Route path='/success' element={<KhaltiSuccess />} />
-        {/* <Route path='/profile' element={<Profile />} /> */}
+        <Route path='/profile' element={<UserProfile />} />
+        <Route path='/myOrders' element={<MyOrders />}/>
       </Routes>
       </BrowserRouter>
       </Provider>
