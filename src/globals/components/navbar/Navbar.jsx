@@ -50,11 +50,6 @@ const Navbar = () => {
                                 Profile
                             </a>
                         </li></Link>
-                        <li>
-                            <a className="block md:px-4 transition hover:text-yellow-700">
-                                Wishlist
-                            </a>
-                        </li>
                         {
                             items.length !== 0 && (
                                 <li className="relative">

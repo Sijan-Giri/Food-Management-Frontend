@@ -1,13 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../../globals/components/navbar/Navbar'
 import Footer from '../../globals/components/footer/Footer'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchOrders } from '../../store/checkoutSlice'
+import { Link } from 'react-router-dom'
 
 const MyOrders = () => {
     const dispatch = useDispatch();
+    const [selectedItem , setSelectedItem] = useState("all");
+    const [date , setDate] = useState("");
+    const [searchTerm , setSearchTerm] = useState("");
     const {orders} = useSelector((state) => state.checkout);
-    console.log(orders)
+
+    const filteredOrder = orders?.filter((order) => selectedItem ==="all" || order.orderStatus === selectedItem)
+    .filter((order) => order?._id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    order?.paymentDetails.method.toLowerCase().includes(searchTerm.toLowerCase())
+    ).filter((order) => date === "" || new Date(order.createdAt).toLocaleDateString() === new Date(date).toLocaleDateString())
     useEffect(() => {
         dispatch(fetchOrders())
     },[])
@@ -18,17 +26,11 @@ const MyOrders = () => {
     <div className="container mx-auto px-4 sm:px-8">
         <div className="py-8">
             <div>
-                <h2 className="text-2xl font-semibold leading-tight">Users</h2>
+                <h2 className="text-2xl font-semibold leading-tight">Orders</h2>
             </div>
             <div className="my-2 flex sm:flex-row flex-col">
                 <div className="flex flex-row mb-1 sm:mb-0">
                     <div className="relative">
-                        <select
-                            className="h-full rounded-l border block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            <option>5</option>
-                            <option>10</option>
-                            <option>20</option>
-                        </select>
                         <div
                             className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                             <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -38,10 +40,14 @@ const MyOrders = () => {
                     </div>
                     <div className="relative">
                         <select
+                            onChange={(e) => setSelectedItem(e.target.value)}
                             className="h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block appearance-none w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                            <option>All</option>
-                            <option>Active</option>
-                            <option>Inactive</option>
+                            <option value="all">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="ontheway">OntheWay</option>
+                            <option value="cancelled">Cancelled</option>
+                            <option value="delivered">Delivered</option>
+                            <option value="preparation">Preparation</option>
                         </select>
                         <div
                             className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -60,7 +66,18 @@ const MyOrders = () => {
                         </svg>
                     </span>
                     <input placeholder="Search"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                         className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                        
+                </div>
+                <div className="block relative">
+                    <input placeholder="Search"
+                        type='date'
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                        className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                        
                 </div>
             </div>
             <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -84,11 +101,15 @@ const MyOrders = () => {
                                     className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                     order Status
                                 </th>
+                                <th
+                                    className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Ordered At
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                orders.length > 0 && orders.map((order) => {
+                                filteredOrder.length > 0 && filteredOrder.map((order) => {
                                     return (
                                         <>
                                         <tr>
@@ -96,11 +117,11 @@ const MyOrders = () => {
                                     <div className="flex items-center">
                                         <div className="flex-shrink-0 w-10 h-10">
                                         </div>
-                                        <div>
+                                        <Link to={`/myOrders/${order._id}`}><div>
                                             <p className="text-gray-900 whitespace-no-wrap">
                                                 {order._id}
                                             </p>
-                                        </div>
+                                        </div></Link>
                                     </div>
                                 </td>
                                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -118,6 +139,9 @@ const MyOrders = () => {
                                             className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
                                         <span className="relative">{order.paymentDetails.status}</span>
                                     </span>
+                                </td>
+                                <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                    <p className="text-gray-900 whitespace-no-wrap">{new Date(order.createdAt).toLocaleDateString()}</p>
                                 </td>
                             </tr>
                            
