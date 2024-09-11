@@ -19,6 +19,7 @@ const MyOrders = () => {
     useEffect(() => {
         dispatch(fetchOrders())
     },[])
+
   return (
     <>
    <Navbar />
@@ -129,7 +130,7 @@ const MyOrders = () => {
                                 </td>
                                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p className="text-gray-900 whitespace-no-wrap">
-                                        {order.paymentDetails.status}({order.paymentDetails. method})
+                                        {order.orderStatus}({order.paymentDetails. method})
                                     </p>
                                 </td>
                                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -137,7 +138,7 @@ const MyOrders = () => {
                                         className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
                                         <span aria-hidden
                                             className="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                        <span className="relative">{order.paymentDetails.status}</span>
+                                        <span className="relative">{order.orderStatus}</span>
                                     </span>
                                 </td>
                                 <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
