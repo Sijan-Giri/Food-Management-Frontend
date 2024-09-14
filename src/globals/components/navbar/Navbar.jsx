@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { fetchProfile, logOut } from '../../../store/authSlice';
+<<<<<<< HEAD
+import { logOut } from '../../../store/authSlice';
+=======
+import { logOut } from '../../../store/authSlice';
+>>>>>>> 7ab59d85b06c24a3b3833d5bf5afc58455c5359a
 import { fetchCartItems } from '../../../store/cartSlice';
 
 const Navbar = () => {
@@ -17,8 +21,12 @@ const Navbar = () => {
   }
 
   useEffect(() => {
+<<<<<<< HEAD
     dispatch(fetchCartItems());
-    dispatch(fetchProfile());
+   
+=======
+    dispatch(fetchCartItems())
+>>>>>>> 7ab59d85b06c24a3b3833d5bf5afc58455c5359a
   },[])
 
   return (

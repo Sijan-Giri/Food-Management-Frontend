@@ -13,7 +13,10 @@ import KhaltiSuccess from './pages/checkout/KhaltiSuccess'
 import UserProfile from './pages/profile/UserProfile'
 import MyOrders from './pages/myOrders/MyOrders'
 import OrderDetails from './pages/orderDetails/OrderDetails'
-import AdminDashboard from './pages/admin/dashboard/AdminDashboard'
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7ab59d85b06c24a3b3833d5bf5afc58455c5359a
 
 function App() {
   
@@ -32,7 +35,10 @@ function App() {
         <Route path='/profile' element={<UserProfile />} />
         <Route path='/myOrders' element={<MyOrders />}/>
         <Route path='/myOrders/:id' element={<OrderDetails />}/>
-        <Route path='/admin' element={<AdminDashboard />} />
+<<<<<<< HEAD
+       
+=======
+>>>>>>> 7ab59d85b06c24a3b3833d5bf5afc58455c5359a
       </Routes>
       </BrowserRouter>
       </Provider>

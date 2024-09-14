@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { STATUSES } from "../globals/misc/status";
+<<<<<<< HEAD
 import {API, APIAuthenticated} from "../globals/http";
+=======
+import {API} from "../globals/http";
+>>>>>>> 7ab59d85b06c24a3b3833d5bf5afc58455c5359a
 
 
 const authSlice = createSlice({
@@ -65,23 +69,6 @@ export function login(data) {
         }
         } catch (error) {
             dispatch(setStatus(STATUSES.ERROR))
-        }
-    }
-}
-
-export function fetchProfile() {
-    return async function fetchProfileThunk(dispatch) {
-        try {
-            dispatch(setStatus(STATUSES.LOADING))
-            const response = await APIAuthenticated.get("/getProfile");
-            if(response.status === 200) {
-                dispatch(setData(response.data.data));
-            }
-            else {
-                dispatch(setStatus(STATUSES.ERROR))
-            }
-        } catch (error) {
-            dispatch(setStatus(STATUSES.ERROR));
         }
     }
 }
