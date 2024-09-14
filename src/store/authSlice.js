@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { STATUSES } from "../globals/misc/status";
 import {API, APIAuthenticated} from "../globals/http";
-import {API} from "../globals/http";
 
 const authSlice = createSlice({
     name : 'auth',
@@ -77,6 +76,7 @@ export function fetchProfile() {
             if(response.status === 200) {
                 dispatch(setData(response.data.data));
                 dispatch(setStatus(STATUSES.SUCCESS))
+                console.log(response.data.data)
             }
             else {
                 dispatch(setStatus(STATUSES.ERROR))
