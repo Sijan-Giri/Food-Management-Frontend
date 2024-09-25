@@ -38,7 +38,6 @@ export function addToCart(id) {
             const response = await APIAuthenticated.post(`/addCart/${id}`);
             if(response.status === 200) {
                 dispatch(setStatus(STATUSES.SUCCESS))
-                dispatch(setItems(response.data.data))
             }
             else {
                 dispatch(setStatus(STATUSES.ERROR))
@@ -57,6 +56,7 @@ export function fetchCartItems() {
             if(response.status == 200) {
                 dispatch(setStatus(STATUSES.SUCCESS));
                 dispatch(setItems(response.data.data));
+                console.log(response.data.data)
             }
             else {
                 dispatch(setStatus(STATUSES.ERROR))

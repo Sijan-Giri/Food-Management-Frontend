@@ -13,10 +13,16 @@ const Checkout = () => {
   const {status,orderId} = useSelector((state) => state.checkout)
   const {items:products} = useSelector((state) => state.cart);
   const [paymentMethod,setPaymentMethod] = useState("COD");
-  const subTotal = products.reduce((amount,item) => item.quantity * item.product.productPrice + amount,0);
+  const subTotal = products.reduce((amount,item) => {
+    if(item?.product) {
+      return item.quantity * item.product.productPrice + amount;
+    }
+    return amount;
+  },0);
   const dispatch = useDispatch();
   const shippingAmount = 100
   const totalAmount = subTotal + shippingAmount
+  console.log(products)
 
   const [data,setData] = useState({
     email : "",
@@ -86,22 +92,24 @@ const Checkout = () => {
   return (
     <>
     <Navbar />
- 
-<div class="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32 gap-8 mt-20"> 
+    <div class="grid sm:px-10 lg:grid-cols-2 lg:px-20 xl:px-32 gap-8 mt-20"> 
   <div class="px-4 pt-8">
     <p class="text-xl font-medium">Order Summary</p>
     <p class="text-gray-400">Check your items. And select a suitable shipping method.</p>
     <div class="mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6">
       {
-          products.length > 0 && products.map((product) => {
+          products?.length > 0 && products?.map((product) => {
+            if(product?.product == null) {
+              return null
+            }
             return (
               <>
               <div class="flex flex-col rounded-lg bg-white sm:flex-row">
-        <img class="m-2 h-24 w-28 rounded-md border object-cover object-center" src={product.product.productImage} alt="" />
+        <img class="m-2 h-24 w-28 rounded-md border object-cover object-center" src={product?.product?.productImage} alt="" />
         <div class="flex w-full flex-col px-4 py-4">
-          <span class="font-semibold">{product.product.productName}</span>
-          <span class="float-right text-gray-400">Qty:- {product.quantity}</span>
-          <p class="text-lg font-bold">{product.product.productPrice}</p>
+          <span class="font-semibold">{product?.product?.productName}</span>
+          <span class="float-right text-gray-400">Qty:- {product?.quantity}</span>
+          <p class="text-lg font-bold">{product?.product?.productPrice}</p>
         </div>
       </div>
               </>
