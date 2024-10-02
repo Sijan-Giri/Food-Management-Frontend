@@ -4,6 +4,7 @@ import Footer from '../../globals/components/footer/Footer'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { APIAuthenticated } from '../../globals/http'
+import MyOrdersqr from '../myOrdersqr/MyOrdersqr'
 
 const OrderDetails = () => {
 
@@ -144,6 +145,7 @@ const OrderDetails = () => {
     </div>
   </div>
 </div>
+{filteredOrder && <MyOrdersqr orderId={filteredOrder?._id} orderDetails={filteredOrder} />}
     <Footer />
     </>
   )

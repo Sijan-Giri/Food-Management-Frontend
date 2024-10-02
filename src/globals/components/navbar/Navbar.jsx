@@ -69,7 +69,7 @@ const Navbar = () => {
                 </div>
                 <div className="flex items-center space-x-4 border-yellow-200 lg:pl-4">
                     {
-                        user.length == 0 && (!localStorage.getItem("token")) ? (
+                        user?.length == 0 && (!localStorage.getItem("token")) ? (
                             <>
                                 <Link to="/register">
                                     <button type="button" title="Register" className="py-3 px-6 rounded-full transition bg-yellow-300 hover:bg-yellow-100 active:bg-yellow-400 focus:bg-yellow-300">
