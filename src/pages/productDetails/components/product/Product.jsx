@@ -17,7 +17,7 @@ const Product = () => {
     },[])
 
     const handleCart = () => {
-      if(user.length == 0 && !localStorage.getItem("token")) {
+      if(!user && !localStorage.getItem("token")) {
         return navigate("/login")
       }
       dispatch(addToCart(id))

@@ -20,9 +20,10 @@ const authSlice = createSlice({
             state.token = action.payload
         },
         logOut(state,action) {
-            state.data = [],
+            state.data = null,
             state.token = null,
-            state.status = STATUSES.SUCCESS
+            state.status = STATUSES.SUCCESS,
+            localStorage.removeItem("token")
         }
     }
 })
@@ -75,6 +76,42 @@ export function fetchProfile() {
             const response = await APIAuthenticated.get("/getProfile");
             if(response.status === 200) {
                 dispatch(setData(response.data.data));
+                dispatch(setStatus(STATUSES.SUCCESS))
+            }
+            else {
+                dispatch(setStatus(STATUSES.ERROR))
+            }
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR))
+        }
+    }
+}
+
+export function forgetPassword(data) {
+    return async function forgetPasswordThunk(dispatch) {
+        try {
+            dispatch(setStatus(STATUSES.LOADING));
+            const response = await API.post("/forgetPassword",data);
+            if(response.status == 200) {
+                dispatch(setStatus(STATUSES.SUCCESS));
+                dispatch(setData(response.data.data))
+            }
+            else {
+                dispatch(setStatus(STATUSES.ERROR))
+            }
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR))
+        }
+    }
+}
+
+export function verifyOtp(data) {
+    return async function verifyOtpThunk(dispatch) {
+        try {
+            dispatch(setStatus(STATUSES.LOADING));
+            const response = await API.post("/verifyOtp",data)
+            console.log(response)
+            if(response.status == 200) {
                 dispatch(setStatus(STATUSES.SUCCESS))
             }
             else {

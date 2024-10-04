@@ -14,6 +14,8 @@ import UserProfile from './pages/profile/UserProfile'
 import MyOrders from './pages/myOrders/MyOrders'
 import OrderDetails from './pages/orderDetails/OrderDetails'
 import MyOrdersqr from './pages/myOrdersqr/MyOrdersqr'
+import ForgetPassword from './pages/auth/forgetPassword/ForgetPassword'
+import VerifyOtp from './pages/auth/verifyOtp/VerifyOtp'
 
 
 function App() {
@@ -34,6 +36,8 @@ function App() {
         <Route path='/myOrders' element={<MyOrders />}/>
         <Route path='/myOrders/:id' element={<OrderDetails />}/>
         <Route path='/myOrdersqr' element={<MyOrdersqr/>} />
+        <Route path='/forgetPassword' element={<ForgetPassword />}/>
+        <Route path='/verifyotp' element={<VerifyOtp />}/>
       </Routes>
       </BrowserRouter>
       </Provider>
