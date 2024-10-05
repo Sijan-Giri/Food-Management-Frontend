@@ -7,7 +7,8 @@ const authSlice = createSlice({
     initialState : {
         data : [],
         status : STATUSES.LOADING,
-        token : ""
+        token : "",
+        email : null
     },
     reducers : {
         setData(state,action) {
@@ -24,11 +25,14 @@ const authSlice = createSlice({
             state.token = null,
             state.status = STATUSES.SUCCESS,
             localStorage.removeItem("token")
+        },
+        setEmail(state,action) {
+            state.email = action.payload
         }
     }
 })
 
-export const {setData , setStatus , setToken , logOut} = authSlice.actions;
+export const {setData , setStatus , setToken , logOut , setEmail} = authSlice.actions;
 export default authSlice.reducer;
 
 export function register(data) {
@@ -112,9 +116,26 @@ export function verifyOtp(data) {
             const response = await API.post("/verifyOtp",data)
             console.log(response)
             if(response.status == 200) {
-                dispatch(setStatus(STATUSES.SUCCESS))
+                dispatch(setStatus(STATUSES.SUCCESS));
+                dispatch(setEmail(data.email))
             }
             else {
+                dispatch(setStatus(STATUSES.ERROR))
+            }
+        } catch (error) {
+            dispatch(setStatus(STATUSES.ERROR))
+        }
+    }
+}
+
+export function resetPassword(data) {
+    return async function resetPasswordThunk(dispatch) {
+        try {
+            dispatch(setStatus(STATUSES.LOADING));
+            const response = await API.post("/resetPassword",data);
+            if(response.status == 200) {
+                dispatch(setStatus(STATUSES.SUCCESS))
+            }else {
                 dispatch(setStatus(STATUSES.ERROR))
             }
         } catch (error) {

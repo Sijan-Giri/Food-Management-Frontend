@@ -16,6 +16,7 @@ import OrderDetails from './pages/orderDetails/OrderDetails'
 import MyOrdersqr from './pages/myOrdersqr/MyOrdersqr'
 import ForgetPassword from './pages/auth/forgetPassword/ForgetPassword'
 import VerifyOtp from './pages/auth/verifyOtp/VerifyOtp'
+import ResetPassword from './pages/auth/resetPassword/ResetPassword'
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <Route path='/myOrdersqr' element={<MyOrdersqr/>} />
         <Route path='/forgetPassword' element={<ForgetPassword />}/>
         <Route path='/verifyotp' element={<VerifyOtp />}/>
+        <Route path='/resetpassword' element={<ResetPassword />}/>
       </Routes>
       </BrowserRouter>
       </Provider>

@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { verifyOtp } from '../../../store/authSlice'
+import { setStatus, verifyOtp } from '../../../store/authSlice'
+import { STATUSES } from '../../../globals/misc/status'
+import { useNavigate } from 'react-router-dom'
 
 const VerifyOtp = () => {
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     const [otp , setOtp] = useState({
         otp : ""
     })
-    const {data} = useSelector((state) => state.auth)
+    const {data,status} = useSelector((state) => state.auth)
     
     const datas = {
         email : data,
@@ -27,6 +30,11 @@ const VerifyOtp = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(verifyOtp(datas))
+    }
+
+    if(status == STATUSES.SUCCESS) {
+      navigate("/resetpassword");
+      dispatch(setStatus(STATUSES.LOADING))
     }
 
   return (
