@@ -17,7 +17,13 @@ import MyOrdersqr from './pages/myOrdersqr/MyOrdersqr'
 import ForgetPassword from './pages/auth/forgetPassword/ForgetPassword'
 import VerifyOtp from './pages/auth/verifyOtp/VerifyOtp'
 import ResetPassword from './pages/auth/resetPassword/ResetPassword'
+import {io} from "socket.io-client"
 
+export const socket = io("http://localhost:2000",{
+  auth : {
+    token : localStorage.getItem("token")
+  }
+})
 
 function App() {
   

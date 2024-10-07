@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../../globals/components/navbar/Navbar'
 import Footer from '../../globals/components/footer/Footer'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchOrders } from '../../store/checkoutSlice'
+import { fetchOrders, updateOrdersStatus } from '../../store/checkoutSlice'
 import { Link } from 'react-router-dom'
+import { socket } from '../../App'
 
 const MyOrders = () => {
     const dispatch = useDispatch();
@@ -16,9 +17,16 @@ const MyOrders = () => {
     .filter((order) => order?._id.toLowerCase().includes(searchTerm.toLowerCase()) ||
     order?.paymentDetails.method.toLowerCase().includes(searchTerm.toLowerCase())
     ).filter((order) => date === "" || new Date(order.createdAt).toLocaleDateString() === new Date(date).toLocaleDateString())
+
     useEffect(() => {
         dispatch(fetchOrders())
     },[])
+
+    useEffect(() => {
+        socket.on("statusUpdated",(data) => {
+            dispatch(updateOrdersStatus(data))
+        })
+    },[socket])
 
   return (
     <>

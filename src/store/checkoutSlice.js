@@ -22,11 +22,19 @@ const checkoutSlice = createSlice({
         },
         setOrders(state,action) {
             state.orders = action.payload
+        },
+        updateOrderStatus(state,action) {
+            const status = action.payload.status
+            const orderId = action.payload.orderId
+            const updatedOrder = state.orders.map((order) =>
+                order._id === orderId ? {...order , orderStatus : status} : order
+            )
+            state.orders = updatedOrder
         }
     }
 })
 
-export const {setData , setStatus, setOrderId , setOrders} = checkoutSlice.actions;
+export const {setData , setStatus, setOrderId , setOrders , updateOrderStatus} = checkoutSlice.actions;
 export default checkoutSlice.reducer;
 
 export function createOrder(data) {
@@ -62,5 +70,11 @@ export function fetchOrders() {
         } catch (error) {
             dispatch(setStatus(STATUSES.ERROR))
         }
+    }
+}
+
+export function updateOrdersStatus(data) {
+    return async function updateOrdersStatusThunk(dispatch) {
+        dispatch(updateOrderStatus(data))
     }
 }
