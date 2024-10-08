@@ -19,7 +19,7 @@ import VerifyOtp from './pages/auth/verifyOtp/VerifyOtp'
 import ResetPassword from './pages/auth/resetPassword/ResetPassword'
 import {io} from "socket.io-client"
 
-export const socket = io("http://localhost:2000",{
+export const socket = io("https://food-management-system-backend.onrender.com",{
   auth : {
     token : localStorage.getItem("token")
   }
